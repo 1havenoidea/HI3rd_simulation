@@ -1,5 +1,6 @@
 import copy
 import winsound as sd
+import random
 
 def gacha_defin() :
     r = random.randrange(1,10000+1)  
@@ -11,11 +12,8 @@ def gacha_defin() :
 
     return result
 
-import random
-
 
 repeat =10000000 #Accuracy
-
 
 X = 0
 
