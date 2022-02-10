@@ -1,0 +1,193 @@
+import random
+import copy
+import winsound as sd
+
+def gacha_defin() :
+    r = random.randrange(1,10+1)
+
+    result = 1
+
+    if(r<=2):
+        result = 2
+    elif(r<=3):
+        result = 3
+    elif(r<=4):
+        result = 5
+    elif (r <= 5):
+        result = 7
+
+    return result
+
+def gacha_normal() :
+    r = random.randrange(1, 1000000+1)
+
+    #print(str(r))
+    result=1
+
+    if(r<=76750):
+        result = 11
+        #383750
+        if(r<=15350):#153500
+            result = 2
+        elif(r<=23025):#153500 + 76750
+            result = 3
+        elif(r<=30700):#230250 + 76750
+            result =5
+        elif(r<=38375):#307000 + 76750
+            result = 7
+
+    return result
+
+
+pass_condition_result0 =\
+    [2]#Pick-up Weapon
+
+
+pass_condition_result1 = \
+    [3,5,7]#One Stigmata
+
+
+pass_condition_result2 =\
+    [3*5, 3*7, 3*3*3, 5*7, 5*5*5, 7*7*7]#Two parts of Stigmata
+
+
+pass_condition_result3 =\
+    [3*5*7,
+     3*3*3*5, 3*3*3*7, 3*5*5*5, 3*7*7*7, 5*5*5*7, 5*7*7*7,
+     3*3*5*5, 3*3*7*7, 5*5*7*7]#Full Stigmata
+
+
+pass_condition_result4 =\
+    [2 * 3, 2*5, 2*7]
+ # Pick-up Weapon+ One Stigmata
+
+
+pass_condition_result5 =\
+    [2*3*5, 2*3*7, 2*3*3*3, 2*5*7, 2*5*5*5, 2*7*7*7]# Pick-up Weapon + Two parts of Stigmata
+
+
+pass_condition_complete =\
+    [2*3*5*7,
+     2*3*3*3*5, 2*3*3*3*7, 2*3*5*5*5, 2*3*7*7*7, 2*5*5*5*7, 2*5*7*7*7,
+     2*3*3*5*5, 2*3*3*7*7, 2*5*5*7*7] # Full Gear
+
+
+
+
+R0=0
+R1=0
+R2=0
+R3=0
+R4=0
+R5=0
+R6=0
+
+repeat = 100000000# = Accuracy
+retry =10
+
+for k in range(0,repeat):
+    temp_arr0 = copy.deepcopy(pass_condition_result0)
+    temp_arr1 = copy.deepcopy(pass_condition_result1)
+    temp_arr2 = copy.deepcopy(pass_condition_result2)
+    temp_arr3 = copy.deepcopy(pass_condition_result3)
+    temp_arr4 = copy.deepcopy(pass_condition_result4)
+    temp_arr5 = copy.deepcopy(pass_condition_result5)
+    temp_arr6 = copy.deepcopy(pass_condition_complete)
+
+    stack = 0
+    guaranteed_stack = 0
+    weapon_stack_consume = True
+    result =1
+
+    for i in range(0, retry):
+
+        gacha_num=1
+
+        if(guaranteed_stack == 59 and weapon_stack_consume):
+            gacha_num = 2
+            guaranteed_stack = 0
+            weapon_stack_consume = False
+
+        elif(stack ==9):
+            gacha_num=gacha_defin()
+            stack =0
+
+            if(gacha_num == 2):
+                weapon_stack_consume=False
+            else:
+                guaranteed_stack=guaranteed_stack+1
+
+        elif(stack != 9):
+            gacha_num=gacha_normal()
+
+            if(gacha_num == 1):
+                stack = stack+1
+            else:
+                stack = 0
+
+                if(gacha_num ==11):
+                    gacha_num=1
+                elif(gacha_num==2):
+                    weapon_stack_consume=False
+            if(gacha_num != 2):
+                guaranteed_stack=guaranteed_stack+1
+
+        result = result * gacha_num
+
+
+    for j in range(0, len(temp_arr0)):
+        temp = temp_arr0[j]
+
+        if(result % temp ==0):
+            R0=R0+1
+            break
+
+    for j in range(0, len(temp_arr1)):
+        temp = temp_arr1[j]
+
+        if (result % temp == 0):
+            R1 = R1 + 1
+            break
+
+    for j in range(0, len(temp_arr2)):
+        temp = temp_arr2[j]
+
+        if (result % temp == 0):
+            R2 = R2 + 1
+            break
+
+    for j in range(0, len(temp_arr3)):
+        temp = temp_arr3[j]
+
+        if (result % temp == 0):
+            R3 = R3 + 1
+            break
+
+    for j in range(0, len(temp_arr4)):
+        temp = temp_arr4[j]
+
+        if (result % temp == 0):
+            R4 = R4 + 1
+            break
+
+    for j in range(0, len(temp_arr5)):
+        temp = temp_arr5[j]
+
+        if (result % temp == 0):
+            R5 = R5 + 1
+            break
+
+    for j in range(0, len(temp_arr6)):
+        temp = temp_arr6[j]
+
+        if (result % temp == 0):
+            R6 = R6 + 1
+            break
+
+print("Pick-up Weapon : "+ str(R0))
+print("One Stigmata : "+ str(R1))
+print("Two parts of Stigmatas : "+ str(R2))
+print("Full Stigmatas : "+ str(R3))
+print("Pick-up Weapon+ One Stigmata : "+ str(R4))
+print("Pick-up Weapon + Two parts of Stigmatas : "+ str(R5))
+print("Full Gear : "+ str(R6))
