@@ -1,0 +1,193 @@
+def gacha_guaranteed() :
+    r = random.randrange(1,10000+1)
+
+    result = 1
+
+    if(r<=1625):
+        result = 2
+    elif(r<=2458):# 1625+833
+        result = 3
+    elif(r<=3291):# 2458+833
+        result = 5
+    elif (r <= 4124):#3291 + 833
+        result = 7
+    elif (r <= 5700) : #4124+ 1625 + 1
+        result = 13
+
+    return result
+
+def gacha_normal() :
+    r = random.randrange(1, 100000+1)
+
+    result=1
+
+    if(r<=10000):
+        result = 11
+
+        if(r<=1625):       #16.25
+            result = 2
+        elif(r<=2458):     #1625 + 833
+            result = 3
+        elif (r <= 3291):  # 2458+833
+            result = 5
+        elif (r <= 4124):  # 3291 + 833
+            result = 7
+        elif (r <= 5700):  # 4124+ 1625 + 1
+            result = 13
+
+    return result
+
+
+pass_condition_result0 =\
+    [2]#Pick-up Weapon
+
+
+pass_condition_result1 = \
+    [3,5,7]#One Stigmata
+
+
+pass_condition_result2 =\
+    [3*5, 3*7, 3*3*3, 5*7, 5*5*5, 7*7*7]#Two parts of Stigmata
+
+
+pass_condition_result3 =\
+    [3*5*7,
+     3*3*3*5, 3*3*3*7, 3*5*5*5, 3*7*7*7, 5*5*5*7, 5*7*7*7,
+     3*3*5*5, 3*3*7*7, 5*5*7*7]#Full Stigmata
+
+
+pass_condition_result4 =\
+    [2 * 3, 2*5, 2*7]
+ # Pick-up Weapon+ One Stigmata
+
+
+pass_condition_result5 =\
+    [2*3*5, 2*3*7, 2*3*3*3, 2*5*7, 2*5*5*5, 2*7*7*7]# Pick-up Weapon + Two parts of Stigmata
+
+
+pass_condition_complete =\
+    [2*3*5*7,
+     2*3*3*3*5, 2*3*3*3*7, 2*3*5*5*5, 2*3*7*7*7, 2*5*5*5*7, 2*5*7*7*7,
+     2*3*3*5*5, 2*3*3*7*7, 2*5*5*7*7] # Full Gear
+
+R0=0
+R1=0
+R2=0
+R3=0
+R4=0
+R5=0
+R6=0
+
+repeat = 10000000 #Accuracy
+retry =300 #num of pulls
+
+for k in range(0,repeat):
+    temp_arr0 = copy.deepcopy(pass_condition_result0)
+    temp_arr1 = copy.deepcopy(pass_condition_result1)
+    temp_arr2 = copy.deepcopy(pass_condition_result2)
+    temp_arr3 = copy.deepcopy(pass_condition_result3)
+    temp_arr4 = copy.deepcopy(pass_condition_result4)
+    temp_arr5 = copy.deepcopy(pass_condition_result5)
+    temp_arr6 = copy.deepcopy(pass_condition_complete)
+
+
+    stack = 0
+    guaranteed_stack = 0
+    Fenghuang_Down_obtain = True
+    result =1
+
+    for i in range(0, retry):
+
+        gacha_num=1
+
+        if(guaranteed_stack == 49 and Fenghuang_Down_obtain):
+            gacha_num = 1
+            guaranteed_stack = 0
+            Fenghuang_Down_obtain = False
+
+        elif(stack ==9):
+            gacha_num=gacha_guaranteed()
+            stack =0
+
+            if(gacha_num == 13):
+                Fenghuang_Down_obtain=False
+            else:
+                guaranteed_stack=guaranteed_stack+1
+
+        elif(stack != 9):
+            gacha_num=gacha_normal()
+
+            if(gacha_num == 1):
+                stack = stack+1
+            else:
+                stack = 0
+
+                if(gacha_num ==11):
+                    gacha_num=1
+                elif(gacha_num==13):
+                    Fenghuang_Down_obtain=False
+                    
+            if(gacha_num != 2):
+                guaranteed_stack=guaranteed_stack+1
+
+        result = result * gacha_num
+
+
+    #result = result * 7 #Can get ragna stigma(B) through an event.
+
+    for j in range(0, len(temp_arr0)):
+        temp = temp_arr0[j]
+
+        if(result % temp ==0):
+            R0=R0+1
+            break
+
+    for j in range(0, len(temp_arr1)):
+        temp = temp_arr1[j]
+
+        if (result % temp == 0):
+            R1 = R1 + 1
+            break
+
+    for j in range(0, len(temp_arr2)):
+        temp = temp_arr2[j]
+
+        if (result % temp == 0):
+            R2 = R2 + 1
+            break
+
+    for j in range(0, len(temp_arr3)):
+        temp = temp_arr3[j]
+
+        if (result % temp == 0):
+            R3 = R3 + 1
+            break
+
+    for j in range(0, len(temp_arr4)):
+        temp = temp_arr4[j]
+
+        if (result % temp == 0):
+            R4 = R4 + 1
+            break
+
+    for j in range(0, len(temp_arr5)):
+        temp = temp_arr5[j]
+
+        if (result % temp == 0):
+            R5 = R5 + 1
+            break
+
+    for j in range(0, len(temp_arr6)):
+        temp = temp_arr6[j]
+
+        if (result % temp == 0):
+            R6 = R6 + 1
+            break
+
+print("Pick-up Weapon : "+ str(R0))
+print("One Stigmata : "+ str(R1))
+print("Two parts of Stigmatas : "+ str(R2))
+print("Full Stigmatas : "+ str(R3))
+print("Pick-up Weapon+ One Stigmata : "+ str(R4))
+print("Pick-up Weapon + Two parts of Stigmatas : "+ str(R5))
+print("Full Gear : "+ str(R6))
