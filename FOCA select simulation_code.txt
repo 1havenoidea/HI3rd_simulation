@@ -2,7 +2,7 @@ import random
 import copy
 import winsound as sd
 
-def gacha_defin() :
+def gacha_guaranteed() :
     r = random.randrange(1,10+1)
 
     result = 1
@@ -26,7 +26,7 @@ def gacha_normal() :
 
     if(r<=76750):
         result = 11
-        #383750
+
         if(r<=15350):#153500
             result = 2
         elif(r<=23025):#153500 + 76750
@@ -109,7 +109,7 @@ for k in range(0,repeat):
             weapon_stack_consume = False
 
         elif(stack ==9):
-            gacha_num=gacha_defin()
+            gacha_num=gacha_guaranteed()
             stack =0
 
             if(gacha_num == 2):
