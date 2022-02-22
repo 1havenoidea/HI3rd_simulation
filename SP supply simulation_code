@@ -2,9 +2,8 @@ import random
 import copy
 import winsound as sd
 
-def gacha_defin() :
+def gacha_guaranteed() :
     r = random.randrange(1,10+1)
-    #print(str(r))
 
     result = 1
 
@@ -19,7 +18,8 @@ def gacha_defin() :
 
     return result
 
-def gacha_defin_2(result) :
+def gacha_guaranteed_2(result) :
+#guaranteed pull for a single piece of the signature equipment every 30 pulls
 
     select=[]
 
@@ -45,7 +45,7 @@ def gacha_normal() :
 
     if(r<=76750):
         result = 11
-        #383750
+
         if(r<=15350):#153500
             result = 2
         elif(r<=23025):#153500 + 76750
@@ -88,8 +88,8 @@ R4=0
 R5=0
 R6=0
 
-repeat = 100000000 # = Accuracy
-retry =10
+repeat = 100000000 # Accuracy
+retry =10 #num of pulls
 
 
 for k in range(0,repeat):
@@ -110,11 +110,11 @@ for k in range(0,repeat):
 
         if(i % 30==0):
             if (result % 210 != 0):
-                gacha_num = gacha_defin_2(result)
+                gacha_num = gacha_guaranteed_2(result)
             stack =0
 
         elif(stack ==9):
-            gacha_num=gacha_defin()
+            gacha_num=gacha_guaranteed()
             if(gacha_num==11):
                 gacha_num=1
             stack =0
