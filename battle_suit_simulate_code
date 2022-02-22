@@ -1,0 +1,64 @@
+import random
+import copy
+import winsound as sd
+
+def gacha_defin() :
+    r = random.randrange(1,10+1)
+
+    result = 1
+
+    if(r<=1):#10%
+        result = 2
+
+    return result
+
+def gacha_normal() :
+    r = random.randrange(1, 100000+1)
+
+    #print(str(r))
+    result=1
+
+    if(r<=9430):#9.43%
+        result = 11
+        if(r<=943):#0.943%
+            result = 2
+
+    return result
+
+R0=0
+repeat = 1000000#accuracy
+retry =99#num of try
+
+for k in range(0,repeat):
+
+    stack = 0
+    guaranteed_stack = 0
+    result =1
+
+    for i in range(0, retry):
+
+        gacha_num=1
+
+        if(stack ==9):
+            gacha_num=gacha_defin()
+            stack =0
+
+        elif(stack != 9):
+            gacha_num=gacha_normal()
+
+            if(gacha_num == 1):
+                stack = stack+1
+            else:
+                stack = 0
+
+                if(gacha_num ==11):
+                    gacha_num=1
+
+        result = result * gacha_num
+
+
+    if(result % 2 == 0):
+          R0=R0+1
+
+print("num of obtain : "+ str(R0))
+print("rates : "+ str(R0/repeat))
