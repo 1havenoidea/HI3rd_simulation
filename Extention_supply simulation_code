@@ -3,9 +3,8 @@ import copy
 import winsound as sd
 
 
-def gacha_defin() :
+def gacha_guaranteed() :
     r = random.randrange(1,1000+1)
-    #print(str(r))
 
     result = 1
 
@@ -19,7 +18,9 @@ def gacha_defin() :
         result = 7
 
     return result
-def gacha_defin_2(result) :
+    
+def gacha_guaranteed_2(result) : 
+#guaranteed pull for a single piece of the signature equipment every 50 pulls
 
     select=[]
 
@@ -34,8 +35,7 @@ def gacha_defin_2(result) :
         select.append(7)
 
     r = random.randrange(0,len(select))
-    #print(str(r))
-
+    
     result = select[r]
 
     return result
@@ -46,13 +46,13 @@ def gacha_normal() :
     #print(str(r))
 
     result=1
-    #76750
+
     if(r<=767500):
         result = 11
 
         if(r<=113590):
             result = 2
-        elif(r<=170385):#567,95
+        elif(r<=170385):
             result = 3
         elif(r<=227180):
             result =5
@@ -93,8 +93,8 @@ R4=0
 R5=0
 R6=0
 
-repeat = 10000000#정확도
-retry =199
+repeat = 10000000 #accuracy
+retry =199 #num of pulls
 
 
 for k in range(0,repeat):
@@ -114,12 +114,12 @@ for k in range(0,repeat):
         gacha_num=1
 
         if(i % 50==0):
-            if (result % 210 != 0):
-                gacha_num = gacha_defin_2(result)
+            if (result % 210 != 0): # 2*3*5*7 = 210 => full gear
+                gacha_num = gacha_guaranteed_2(result)
             stack =0
 
         elif(stack ==9):
-            gacha_num=gacha_defin()
+            gacha_num=gacha_guaranteed()
             if(gacha_num==11):
                 gacha_num=1
             stack =0
