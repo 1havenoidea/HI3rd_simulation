@@ -2,7 +2,7 @@ import copy
 import winsound as sd
 import random
 
-def gacha_defin() :
+def gacha_Abyss_Flower() :
     r = random.randrange(1,10000+1)  
 
     result = 0
@@ -28,16 +28,15 @@ for k in range(0,repeat):
         result = 0
 
         if(S==9):
-            result = gacha_defin()
+            result = gacha_Abyss_Flower()
             S = 0
 
         elif (r <= p):
-            result = gacha_defin()
+            result = gacha_Abyss_Flower()
             S=0
         else:
             S = S + 1
 
-        
         if(result == 1):
             X = X+result
             break
