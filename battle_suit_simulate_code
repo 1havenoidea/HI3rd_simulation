@@ -2,7 +2,7 @@ import random
 import copy
 import winsound as sd
 
-def gacha_defin() :
+def gacha_guaranteed() :
     r = random.randrange(1,10+1)
 
     result = 1
@@ -15,7 +15,6 @@ def gacha_defin() :
 def gacha_normal() :
     r = random.randrange(1, 100000+1)
 
-    #print(str(r))
     result=1
 
     if(r<=9430):#9.43%
@@ -26,8 +25,8 @@ def gacha_normal() :
     return result
 
 R0=0
-repeat = 1000000#accuracy
-retry =99#num of try
+repeat = 1000000 #accuracy
+retry =99 #num of try
 
 for k in range(0,repeat):
 
@@ -40,11 +39,11 @@ for k in range(0,repeat):
         gacha_num=1
 
         if(stack ==9):
-            gacha_num=gacha_defin()
+            gacha_num = gacha_guaranteed()
             stack =0
 
         elif(stack != 9):
-            gacha_num=gacha_normal()
+            gacha_num = gacha_normal()
 
             if(gacha_num == 1):
                 stack = stack+1
